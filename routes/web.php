@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\CheckKabuValue;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,7 +13,9 @@
 |
 */
 
+
 Route::get('/', function () {
+	//event(new CheckKabuValue());
     return view('welcome');
 });
 
