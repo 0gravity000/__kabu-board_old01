@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>kabuboard</title>
+        <title>Laravel</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -79,19 +79,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    kabuboard
+                    Laravel
                 </div>
-                <h2>Thank you for visiting!</h2>
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                    Kabuboard へようこそ。</br>
-                    </br>
-                    このサイトは
-                    <a href="https://stocks.finance.yahoo.co.jp/" target="_blank">Yahooファイナンス株式</a>
-                    のデータを参考にしています。</br>
-                  </table>
-                </div>
-                <!--
+
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
@@ -99,7 +89,6 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
-            -->
             </div>
         </div>
     </body>

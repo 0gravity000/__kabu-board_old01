@@ -1,23 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
         </div>
+    @endif
+
+    You are logged in!
+
+    <h2>Thank you for visiting!</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        Kabuboard へようこそ。</br>
+        </br>
+        このサイトはYahooファイナンス株式のデータを参考にしています。</br>
+        <a href="https://stocks.finance.yahoo.co.jp/" target="_blank">Yahooファイナンス株式</a>
+      </table>
     </div>
-</div>
+
 @endsection
