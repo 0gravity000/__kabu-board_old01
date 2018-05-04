@@ -23,19 +23,19 @@
             </h6>
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Realtimes">
                   <span data-feather="file-text"></span>
                   銘柄設定
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Realtimes/value">
                   <span data-feather="file-text"></span>
                   現在地通知設定
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Realtimes/changerate">
                   <span data-feather="file-text"></span>
                   急騰急落通知設定
                 </a>

@@ -24,3 +24,19 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/Meigaras','MeigarasController@index');
+
+Route::get('/Realtimes','RealtimesController@index');
+Route::get('/Realtimes/value','RealtimesController@index_value');
+Route::get('/Realtimes/changerate','RealtimesController@index_changerate');
+
+Route::get('/Realtimes/update','RealtimesController@update');
+Route::get('/Realtimes/create','RealtimesController@create');
+Route::get('/Realtimes/reset','RealtimesController@reset');
+Route::post('/Realtimes','RealtimesController@store');
+Route::post('/Realtimes/config_value','RealtimesController@config_value');
+Route::post('/Realtimes/configed_value','RealtimesController@configed_value');
+Route::post('/Realtimes/config_changerate','RealtimesController@config_changerate');
+Route::post('/Realtimes/configed_changerate','RealtimesController@configed_changerate');
+
+Route::post('/Realtimes/auto', 'RealtimesController@auto');
+

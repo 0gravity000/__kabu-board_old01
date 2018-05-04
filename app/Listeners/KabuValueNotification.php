@@ -31,7 +31,7 @@ class KabuValueNotification
     {
         //debug
         //var_dump("Event Notify!");
+        //Mail::to('aihowareyou@gmail.com')->send(new Established_value());
         log::debug("in KabuValueNotification.php");
-        Mail::to('aihowareyou@gmail.com')->send(new Established_value());
     }
 }

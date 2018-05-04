@@ -13,3 +13,4 @@ yarn-error.log
 .env
 -local.env
 -server.env
+/config/mail.php
