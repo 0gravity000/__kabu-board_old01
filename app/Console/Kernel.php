@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //一旦コメントアウト
-        //$schedule->command('kabu:checkvalue')->everyMinute();
+        $schedule->command('kabu:checkvalue')->everyMinute();
 
         //$schedule->command('checkKabuValue')->everyMinute();
 
