@@ -40,7 +40,7 @@ class KabuValueNotification
         //debug
         //var_dump("Event Notify!");
         //Mail::to('aihowareyou@gmail.com')->send(new Established_value());
-        log::debug("in KabuValueNotification.php");
+        //log::debug("in KabuValueNotification.php");
 
           //動作処理
           $a_temp;
