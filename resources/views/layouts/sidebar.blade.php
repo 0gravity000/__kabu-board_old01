@@ -31,7 +31,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="/Realtimes/value">
                   <span data-feather="file-text"></span>
-                  現在地通知設定
+                  現在値通知設定
                 </a>
               </li>
               <li class="nav-item">

@@ -24,6 +24,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/Meigaras','MeigarasController@index');
+Route::get('/Meigaras/reload','MeigarasController@reload');
 
 Route::get('/Realtimes','RealtimesController@index');
 Route::get('/Realtimes/value','RealtimesController@index_value');

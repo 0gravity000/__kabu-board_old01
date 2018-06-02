@@ -2,6 +2,7 @@
 
 @section('content')
 <h2>銘柄一覧</h2>
+<a href="/Meigaras/reload">更新</a>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
