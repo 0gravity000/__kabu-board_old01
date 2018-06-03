@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\CheckDailyValue01;
+use App\Events\CheckDailyValue13;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
-class DownloadDailyValue01
+class DownloadDailyValue13
 {
     /**
      * Create the event listener.
@@ -21,22 +21,20 @@ class DownloadDailyValue01
      */
     public function __construct()
     {
-          //
+        //
     }
 
     /**
      * Handle the event.
      *
-     * @param  CheckDailyValue  $event
+     * @param  CheckDailyValue13  $event
      * @return void
      */
-    public function handle(CheckDailyValue01 $event)
+    public function handle(CheckDailyValue13 $event)
     {
-
-        //$StockCollection = [];
-        //dd($meigaras);
         $meigaras = DB::table('meigaras')->orderBy('code')
-                                         ->where('code', '<', 1828)->get();
+                                            ->where('code', '>=', 4186)
+                                            ->where('code', '<', 4409)->get();
         //$Meigaras = Meigara::all();   //タイムアウト30秒にひっかかり全部を一度に取得できない
         foreach ($meigaras as $meigara) {   //全銘柄ループ
           $client = new Client();   //composer require fabpot/goutte しておくこと
@@ -62,43 +60,29 @@ class DownloadDailyValue01
           //#detail > div.innerDate > div:nth-child(1) > dl > dd > strong
           $preEndvalue = $crawler->filter('#detail > div.innerDate > div:nth-child(1) > dl > dd > strong')->text();
             //dd($preEndvalue);
-
           //始値
                 //#detail > div.innerDate > div:nth-child(2) > dl > dd > strong      
           $startValue = $crawler->filter('#detail > div.innerDate > div:nth-child(2) > dl > dd > strong')->text();
             //dd($startValue);
-
           //高値
           //#detail > div.innerDate > div:nth-child(3) > dl > dd > strong
           $highValue = $crawler->filter('#detail > div.innerDate > div:nth-child(3) > dl > dd > strong')->text();
             //dd($highValue);
-
           //安値
           $lowValue = $crawler->filter('#detail > div.innerDate > div:nth-child(4) > dl > dd > strong')->text();
             //dd($lowValue);
-
           //出来高
           //#detail > div.innerDate > div:nth-child(5) > dl > dd > strong
           $volume = $crawler->filter('#detail > div.innerDate > div:nth-child(5) > dl > dd > strong')->text();
             //dd($volume);
-          /*
-          $StockCollection_temp = [
-                "code" => $meigara->code,
-                "preEndvalue" => $preEndvalue,
-                "startValue" => $startValue,
-                "highValue" => $highValue,
-                "lowValue" => $lowValue,
-                "volume" => $volume,
-            ];
-            array_push($StockCollection, $StockCollection_temp);
-            */
             $fileOutputString = $meigara->code .'/'. $preEndvalue .'/'. $startValue .'/'. $highValue .'/'. $lowValue .'/'. $volume .'\n';
 
             //ファイル出力
             $today = Carbon::now()->toDateString();
-            Storage::append(('kabus/daily/'. $today .'.txt'), $fileOutputString );
-            //Storage::disk('local')->append(('kabus/daily/'. $today .'.txt'), $fileOutputString );
 
-    }   //全銘柄ループエンド
-  }
+            Storage::append(('kabus/daily/'. $today .'.txt'), $fileOutputString );
+
+        }   //全銘柄ループエンド
+
+    }
 }

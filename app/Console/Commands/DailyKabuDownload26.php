@@ -3,16 +3,16 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Events\CheckDailyValue01;    //イベントクラス名とかぶるとダメ
+use App\Events\CheckDailyValue26;    //イベントクラス名とかぶるとダメ
 
-class DailyKabuDownload01 extends Command
+class DailyKabuDownload26 extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'kabu:dailydownload01';
+    protected $signature = 'kabu:dailydownload26';
 
     /**
      * The console command description.
@@ -38,6 +38,6 @@ class DailyKabuDownload01 extends Command
      */
     public function handle()
     {
-        event(new CheckDailyValue01());
+        event(new CheckDailyValue26());
     }
 }
