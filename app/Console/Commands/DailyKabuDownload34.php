@@ -38,6 +38,6 @@ class DailyKabuDownload34 extends Command
      */
     public function handle()
     {
-        event(new CheckDailyValue35());
+        event(new CheckDailyValue34());
     }
 }
