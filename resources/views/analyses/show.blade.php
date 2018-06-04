@@ -34,15 +34,17 @@
       </tr>
     </thead>
     <tbody>
+          @for($i = 0; $i < count($Dailys); $i++)
         <tr>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
+            <td>{{ array_get($Dailys[$i], 'code') }}</td>
+            <td>{{ array_get($Dailys[$i], 'name') }}</td>
+            <td>{{ array_get($Dailys[$i], 'preEndvalue') }}</td>
+            <td>{{ array_get($Dailys[$i], 'startValue') }}</td>
+            <td>{{ array_get($Dailys[$i], 'highValue') }}</td>
+            <td>{{ array_get($Dailys[$i], 'lowValue') }}</td>
+            <td>{{ array_get($Dailys[$i], 'volume') }}</td>
         </tr>
+          @endfor
     </tbody>
   </table>
 </div>
