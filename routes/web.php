@@ -42,4 +42,4 @@ Route::post('/Realtimes/configed_changerate','RealtimesController@configed_chang
 Route::post('/Realtimes/auto', 'RealtimesController@auto');
 
 Route::get('/Analyses','AnalysesController@index');
-Route::get('/Analyses/Daily','AnalysesController@create');
+//Route::get('/Analyses/Daily','AnalysesController@create');
