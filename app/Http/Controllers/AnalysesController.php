@@ -51,11 +51,12 @@ class AnalysesController extends Controller
 				$Dailys_temp = [
 	    		"code" => $code,
 	    		"name" => $name,
-	    		"preEndvalue" => $dailysArray[1],	
-	    		"startValue" => $dailysArray[2],	
-	    		"highValue" => $dailysArray[3],	
-	    		"lowValue" => $dailysArray[4],	
-	    		"volume" => $dailysArray[5],
+	    		"endValue" => $dailysArray[1],
+	    		"preEndvalue" => $dailysArray[2],	
+	    		"startValue" => $dailysArray[3],	
+	    		"highValue" => $dailysArray[4],	
+	    		"lowValue" => $dailysArray[5],	
+	    		"volume" => $dailysArray[6],
 				];
 				array_push($Dailys, $Dailys_temp);
 				//開業コードの調整
@@ -66,6 +67,7 @@ class AnalysesController extends Controller
 			$Dailys_temp = [
     		"code" => "",
     		"name" => "",
+    		"endValue" => "",
     		"preEndvalue" => "",	
     		"startValue" => "",	
     		"highValue" => "",	

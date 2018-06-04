@@ -56,6 +56,11 @@ class DownloadDailyValue17
             $crawler = $client->request('GET', $html);
 
             //日足用データ取得
+          //終値
+          $endValue = $crawler->filter('table.stocksTable tr')->each(function ($node) {
+            $endValue_temp = $node->filter('td')->eq(1)->text();
+            return $endValue_temp;
+          });
           //前日終値
           //#detail > div.innerDate > div:nth-child(1) > dl > dd > strong
           $preEndvalue = $crawler->filter('#detail > div.innerDate > div:nth-child(1) > dl > dd > strong')->text();
@@ -75,7 +80,7 @@ class DownloadDailyValue17
           //#detail > div.innerDate > div:nth-child(5) > dl > dd > strong
           $volume = $crawler->filter('#detail > div.innerDate > div:nth-child(5) > dl > dd > strong')->text();
             //dd($volume);
-            $fileOutputString = $meigara->code .'/'. $preEndvalue .'/'. $startValue .'/'. $highValue .'/'. $lowValue .'/'. $volume .'\n';
+            $fileOutputString = $meigara->code .'/'. $endValue[0] .'/'. $preEndvalue .'/'. $startValue .'/'. $highValue .'/'. $lowValue .'/'. $volume .'\n';
 
             //ファイル出力
             $today = Carbon::now()->toDateString();

@@ -20,31 +20,4 @@
   <button type="submit" class="btn btn-primary">表示</button>
 </form>
 
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>コード</th>
-        <th>銘柄名</th>
-        <th>前日終値</th>
-        <th>始値</th>
-        <th>高値</th>
-        <th>安値</th>
-        <th>出来高</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-          <td>#</td>
-        </tr>
-    </tbody>
-  </table>
-</div>
-
 @endsection

@@ -26,6 +26,7 @@
       <tr>
         <th>コード</th>
         <th>銘柄名</th>
+        <th>終値</th>
         <th>前日終値</th>
         <th>始値</th>
         <th>高値</th>
@@ -38,6 +39,7 @@
         <tr>
             <td>{{ array_get($Dailys[$i], 'code') }}</td>
             <td>{{ array_get($Dailys[$i], 'name') }}</td>
+            <td>{{ array_get($Dailys[$i], 'endValue') }}</td>
             <td>{{ array_get($Dailys[$i], 'preEndvalue') }}</td>
             <td>{{ array_get($Dailys[$i], 'startValue') }}</td>
             <td>{{ array_get($Dailys[$i], 'highValue') }}</td>
