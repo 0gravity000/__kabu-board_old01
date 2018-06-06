@@ -44,3 +44,6 @@ Route::post('/Realtimes/auto', 'RealtimesController@auto');
 Route::get('/Analyses','AnalysesController@index');
 Route::post('/Analyses/show','AnalysesController@show');
 //Route::get('/Analyses/Daily','AnalysesController@create');
+
+Route::get('/Signals/sanpei','SignalsController@index_sanpei');
+Route::post('/Signals/show_sanpei','SignalsController@show_sanpei');

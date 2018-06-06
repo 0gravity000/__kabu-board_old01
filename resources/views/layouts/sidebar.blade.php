@@ -49,10 +49,17 @@
             </h6>
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="/Signals">
+                <a class="nav-link" href="/Signals/sanpei">
                   <span data-feather="file-text"></span>
-                  三空
+                  三兵
                 </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Signals/volume">
+                  <span data-feather="file-text"></span>
+                  出来高急増
+                </a>
+              </li>
             </ul>
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>分析</span>
