@@ -130,6 +130,18 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CheckDailyValue38' => [
             'App\Listeners\DownloadDailyValue38',
         ],
+        'App\Events\CheckSignalKurosan01' => [
+            'App\Listeners\MakeFileKurosan01',
+        ],
+        'App\Events\CheckSignalKurosan02' => [
+            'App\Listeners\MakeFileKurosan02',
+        ],
+        'App\Events\CheckSignalKurosan03' => [
+            'App\Listeners\MakeFileKurosan03',
+        ],
+        'App\Events\CheckSignalKurosan04' => [
+            'App\Listeners\MakeFileKurosan04',
+        ],
     ];
 
     /**
