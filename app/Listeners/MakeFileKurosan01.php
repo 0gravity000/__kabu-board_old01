@@ -86,6 +86,7 @@ class MakeFileKurosan01
         var_dump($filepath .'/'.$threedaysagofile);
             //ファイルあり
             $contents = \File::get($filepath .'/'.$threedaysagofile);
+            $contents = str_replace(',', '', $contents);    //カンマ削除
             //データ抽出
             $startpos = 0;
             while(mb_strpos($contents, '\n', $startpos)){
@@ -93,7 +94,7 @@ class MakeFileKurosan01
                 $rowstring = mb_substr($contents, $startpos, $endpos - $startpos);
 
                 $dailysArray = mb_split('/', $rowstring);
-                //dd($dailysArray);
+                //var_dump($dailysArray);
                 //改行コードの調整
                 $code = str_replace(array("\n", "n"), '', $dailysArray[0]);
                 if ($dailysArray[1] != "---") { //終値が---でないもの
@@ -101,7 +102,7 @@ class MakeFileKurosan01
                         $meigaras = Meigara::where('code', $code)->first();
                         $name = $meigaras->name;
                         //dd($Dailys);
-                        $fileOutputString = $code .'/'. $dailysArray[1] .'\n';
+                        $fileOutputString = 'C'. $code .'/'. $dailysArray[1] .'\n';
                         //ファイル出力
                         $today = Carbon::now()->toDateString();
                         Storage::append(('kabus/signal/'. $today .'_kurosan01.txt'), $fileOutputString );

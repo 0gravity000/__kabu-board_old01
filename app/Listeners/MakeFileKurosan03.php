@@ -6,6 +6,10 @@ use App\Events\CheckSignalKurosan03;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+use Carbon\Carbon;
+use App\Meigara;
+use Illuminate\Support\Facades\Storage;
+
 class MakeFileKurosan03
 {
     /**
@@ -82,11 +86,12 @@ class MakeFileKurosan03
         var_dump($filepath .'/'.$onedayagofile);
         //ファイルあり
         $contents = \File::get($filepath .'/'.$onedayagofile);
+        $contents = str_replace(',', '', $contents);    //カンマ削除
         $today = Carbon::now()->toDateString();
         if (\File::exists($filepath_signal .'/'. $today .'_kurosan02.txt')) {
-            //var_dump($filepath_signal .'/'. $today .'_kurosan02.txt');
+            var_dump($filepath_signal .'/'. $today .'_kurosan02.txt');
             $contents_compare = \File::get($filepath_signal .'/'. $today .'_kurosan02.txt');  //比較ファイル
-            var_dump($contents_compare);
+            //var_dump($contents_compare);
            //データ抽出
             $startpos = 0;
             while(mb_strpos($contents, '\n', $startpos)){
@@ -100,22 +105,24 @@ class MakeFileKurosan03
                 if ($dailysArray[1] != "---") { //終値が---でないもの
                     if (intval($dailysArray[1]) < intval($dailysArray[3])) {  //終値 < 始値 ?
                         //比較ファイル中に、該当コードがあるか?
-                        $compare_startpos = mb_strpos($contents_compare, $code.'/');
+                        $compare_startpos = mb_strpos($contents_compare, 'C'. $code.'/');
+                        var_dump($code. ':' .$compare_startpos);
                         if ($compare_startpos) {
                             //比較ファイル中に、該当コードがある場合
                             //前日終値を取得
-                            $compare_startpos += 5;
+                            $compare_startpos += 6;
                             $compare_endpos = mb_strpos($contents_compare, '/', $compare_startpos);
                             $compare_endvalue01 = mb_substr($contents_compare, $compare_startpos, $compare_endpos - $compare_startpos);
-                            $compare_startpos += 1;
+                            $compare_startpos = $compare_endpos +1;
                             $compare_endpos = mb_strpos($contents_compare, '\n', $compare_startpos);
                             $compare_endvalue02 = mb_substr($contents_compare, $compare_startpos, $compare_endpos - $compare_startpos);
+                            var_dump($dailysArray[1] .':'. $compare_endvalue01 .':'. $compare_endvalue02);
 
                             //var_dump($compare_endvalue);
                             //終値 < 前日終値 ?
                             if (intval($dailysArray[1]) < intval($compare_endvalue02)) {
                                 //終値 < 前日終値 ?
-                                $fileOutputString = ($code .'/'. $compare_endvalue01 .'/'. $compare_endvalue02 .'/'. $dailysArray[1] .'\n');
+                                $fileOutputString = ('C'. $code .'/'. $compare_endvalue01 .'/'. $compare_endvalue02 .'/'. $dailysArray[1] .'\n');
                                 //ファイル出力
                                 Storage::append(('kabus/signal/'. $today .'_kurosan03.txt'), $fileOutputString);
                             }
@@ -128,7 +135,7 @@ class MakeFileKurosan03
         } 
         //比較用ファイルが存在しない、該当データが一行もない場合
         if (!(\File::exists($filepath_signal .'/'. $today .'_kurosan03.txt'))) {
-            $fileOutputString = ('---' .'/'. '---' .'/'. '---' .'\n');
+            $fileOutputString = ('---' .'/'. '---' .'/'. '---' .'/'. '---' .'\n');
             //ファイル出力
             Storage::append(('kabus/signal/'. $today .'_kurosan03.txt'), $fileOutputString);
         }

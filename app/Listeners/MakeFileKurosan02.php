@@ -86,6 +86,7 @@ class MakeFileKurosan02
         var_dump($filepath .'/'.$twodaysagofile);
         //ファイルあり
         $contents = \File::get($filepath .'/'.$twodaysagofile);
+        $contents = str_replace(',', '', $contents);    //カンマ削除
         $today = Carbon::now()->toDateString();
         if (\File::exists($filepath_signal .'/'. $today .'_kurosan01.txt')) {
             var_dump($filepath_signal .'/'. $today .'_kurosan01.txt');
@@ -104,18 +105,19 @@ class MakeFileKurosan02
                 if ($dailysArray[1] != "---") { //終値が---でないもの
                     if (intval($dailysArray[1]) < intval($dailysArray[3])) {  //終値 < 始値 ?
                         //比較ファイル中に、該当コードがあるか?
-                        $compare_startpos = mb_strpos($contents_compare, $code.'/');
+                        $compare_startpos = mb_strpos($contents_compare, 'C'. $code.'/');
+                        var_dump($compare_startpos);
                         if ($compare_startpos) {
                             //比較ファイル中に、該当コードがある場合
                             //前日終値を取得
-                            $compare_startpos += 5;
+                            $compare_startpos += 6;
                             $compare_endpos = mb_strpos($contents_compare, '\n', $compare_startpos);
                             $compare_endvalue = mb_substr($contents_compare, $compare_startpos, $compare_endpos - $compare_startpos);
                             //var_dump($compare_endvalue);
                             //終値 < 前日終値 ?
                             if (intval($dailysArray[1]) < intval($compare_endvalue)) {
                                 //終値 < 前日終値 ?
-                                $fileOutputString = ($code .'/'. $compare_endvalue .'/'. $dailysArray[1] .'\n');
+                                $fileOutputString = ('C'. $code .'/'. $compare_endvalue .'/'. $dailysArray[1] .'\n');
                                 //ファイル出力
                                 Storage::append(('kabus/signal/'. $today .'_kurosan02.txt'), $fileOutputString);
                             }
