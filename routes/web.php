@@ -45,5 +45,5 @@ Route::get('/Analyses','AnalysesController@index');
 Route::post('/Analyses/show','AnalysesController@show');
 //Route::get('/Analyses/Daily','AnalysesController@create');
 
-Route::get('/Signals/sanpei','SignalsController@index_sanpei');
+Route::get('/Signals/kurosanpei','SignalsController@index_kurosanpei');
 Route::post('/Signals/show_sanpei','SignalsController@show_sanpei');

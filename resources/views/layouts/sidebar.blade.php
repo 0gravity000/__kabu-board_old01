@@ -49,9 +49,9 @@
             </h6>
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="/Signals/sanpei">
+                <a class="nav-link" href="/Signals/kurosanpei">
                   <span data-feather="file-text"></span>
-                  三兵
+                  黒三兵
                 </a>
               </li>
               <li class="nav-item">

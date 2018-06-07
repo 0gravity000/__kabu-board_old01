@@ -9,14 +9,54 @@ use App\Meigara;
 
 class SignalsController extends Controller
 {
-  public function index_sanpei()
+  public function index_kurosanpei()
   {
   	$dt = Carbon::now();
-  	$nowYear = $dt->year;
-  	$nowMonth = $dt->month;
-  	$nowDay = $dt->day;
-  	//dd($nowYear, $nowMonth, $nowDay);
-    return view('signals.index_sanpei', compact('nowYear', 'nowMonth', 'nowDay'));
+    //基準日(当日)の算出
+    //時間チェック
+    if($dt->hour < 18) {    
+        //18時より前は当日分のファイルがないので前日を基準に設定する
+        $dt->subDay();
+    }
+    //週末チェック
+    if($dt->dayOfWeek == 6){    //土曜
+        $dt->subDay();
+    } elseif ($dt->dayOfWeek == 0) {    //日曜
+        $dt->subDay(2);
+    }
+
+    $targetfile = $dt->year.'-'.sprintf('%02d', $dt->month).'-'.sprintf('%02d', $dt->day)."_kurosan.txt";
+    $filepath_signal = storage_path('app/kabus/signal');
+  	$Sanpeis = [];
+    if (\File::exists($filepath_signal .'/'. $targetfile)) {
+			$contents = \File::get($filepath_signal .'/'. $targetfile);
+      $startpos = 0;
+      while(mb_strpos($contents, '\n', $startpos)){
+        $endpos = mb_strpos($contents, '\n', $startpos);
+        $rowstring = mb_substr($contents, $startpos, $endpos - $startpos);
+        $dailysArray = mb_split('/', $rowstring);
+        $code = str_replace(array("\n", "n","C"), '', $dailysArray[0]);
+				$meigaras = Meigara::where('code', $code)->first();
+				$name = $meigaras->name;
+				$downvalue = intval($dailysArray[4]) - intval($dailysArray[1]);
+				$downrate = sprintf('%.2f', intval($downvalue) / intval($dailysArray[1]) *100);
+				$Sanpeis_temp = [
+	    		"code" => $code,
+	    		"name" => $name,
+	    		"endValue03" => $dailysArray[1],
+	    		"endValue02" => $dailysArray[2],	
+	    		"endValue01" => $dailysArray[3],	
+	    		"endValue" => $dailysArray[4],
+	    		"downvalue" => $downvalue,
+	    		"downrate" => $downrate,
+				];
+				array_push($Sanpeis, $Sanpeis_temp);
+	      $startpos = $endpos+1;
+	   }
+		}
+		//dd($Sanpeis);
+		$today = $dt->toDateString();
+    return view('signals.index_kurosanpei', compact('Sanpeis', 'today'));
 	}
 
   public function show_sanpei()
