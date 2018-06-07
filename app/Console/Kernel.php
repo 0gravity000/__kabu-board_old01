@@ -70,7 +70,7 @@ class Kernel extends ConsoleKernel
         //黒三平チェック
         //30秒タイムアウトにひっかかり全データを一度に実行できない
         //4回に分けて実行する
-        $schedule->command('kabu:signalkurosan01')->dailyAt('11:36')->sendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalkurosan01')->dailyAt('17:30')->sendOutputTo(storage_path('logs/signal_output.txt'));
         $schedule->command('kabu:signalkurosan02')->dailyAt('17:32')->appendOutputTo(storage_path('logs/signal_output.txt'));
         $schedule->command('kabu:signalkurosan03')->dailyAt('17:34')->appendOutputTo(storage_path('logs/signal_output.txt'));
         $schedule->command('kabu:signalkurosan04')->dailyAt('17:36')->appendOutputTo(storage_path('logs/signal_output.txt'));

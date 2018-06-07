@@ -79,7 +79,7 @@ class MakeFileKurosan01
         //$filepath = '../storage/app/kabus/daily';
 
         $contents = '';
-        $Dailys = [];
+        //$Dailys = [];
         //$Files = [ $basedayfile, $onedayagofile, $twodaysagofile, $threedaysagofile ];
         //dd($Files);
         //if (\File::exists($filepath .'/'.$threedaysagofile)) {
@@ -96,7 +96,7 @@ class MakeFileKurosan01
                 //dd($dailysArray);
                 //改行コードの調整
                 $code = str_replace(array("\n", "n"), '', $dailysArray[0]);
-                if ($dailysArray[3] != "---") {
+                if ($dailysArray[1] != "---") { //終値が---でないもの
                     if (intval($dailysArray[1]) < intval($dailysArray[3])) {  //終値 < 始値 ?
                         $meigaras = Meigara::where('code', $code)->first();
                         $name = $meigaras->name;
