@@ -2,7 +2,7 @@
 
 @section('content')
 <h2>シグナル</h2>
-<h3>黒三兵</h3>
+<h3>赤三兵</h3>
 {{ $today }}
 <div class="table-responsive">
   <table class="table table-striped">
@@ -14,8 +14,8 @@
         <th>2日前終値</th>
         <th>1日前終値</th>
         <th>本日終値</th>
-        <th>値下値</th>
-        <th>値下率</th>
+        <th>値上値</th>
+        <th>値上率</th>
       </tr>
     </thead>
     <tbody>

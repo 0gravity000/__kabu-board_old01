@@ -142,6 +142,18 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CheckSignalKurosan04' => [
             'App\Listeners\MakeFileKurosan04',
         ],
+        'App\Events\CheckSignalAkasan01' => [
+            'App\Listeners\MakeFileAkasan01',
+        ],
+        'App\Events\CheckSignalAkasan02' => [
+            'App\Listeners\MakeFileAkasan02',
+        ],
+        'App\Events\CheckSignalAkasan03' => [
+            'App\Listeners\MakeFileAkasan03',
+        ],
+        'App\Events\CheckSignalAkasan04' => [
+            'App\Listeners\MakeFileAkasan04',
+        ],
     ];
 
     /**

@@ -74,6 +74,13 @@ class Kernel extends ConsoleKernel
         $schedule->command('kabu:signalkurosan02')->dailyAt('17:32')->appendOutputTo(storage_path('logs/signal_output.txt'));
         $schedule->command('kabu:signalkurosan03')->dailyAt('17:34')->appendOutputTo(storage_path('logs/signal_output.txt'));
         $schedule->command('kabu:signalkurosan04')->dailyAt('17:36')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        //赤三平チェック
+        //30秒タイムアウトにひっかかり全データを一度に実行できない
+        //4回に分けて実行する
+        $schedule->command('kabu:signalakasan01')->dailyAt('17:38')->sendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalakasan02')->dailyAt('17:40')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalakasan03')->dailyAt('17:42')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalakasan04')->dailyAt('17:44')->appendOutputTo(storage_path('logs/signal_output.txt'));
 
         //$schedule->exec("touch foo.txt")->everyFiveMinutes();
         // $schedule->command('inspire')

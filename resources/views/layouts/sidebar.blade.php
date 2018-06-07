@@ -55,6 +55,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/Signals/akasanpei">
+                  <span data-feather="file-text"></span>
+                  赤三兵
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/Signals/volume">
                   <span data-feather="file-text"></span>
                   出来高急増
