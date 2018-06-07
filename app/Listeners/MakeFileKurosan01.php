@@ -75,16 +75,17 @@ class MakeFileKurosan01
         }
         $threedaysagofile = $dt->year.'-'.sprintf('%02d', $dt->month).'-'.sprintf('%02d', $dt->day).".txt";
 
-        $filepath = '../storage/app/kabus/daily';
+        $filepath = storage_path('app/kabus/daily');
+        //$filepath = '../storage/app/kabus/daily';
 
         $contents = '';
         $Dailys = [];
         //$Files = [ $basedayfile, $onedayagofile, $twodaysagofile, $threedaysagofile ];
         //dd($Files);
-        if (\File::exists($filepath .'/'.$threedaysagofile)) {
+        //if (\File::exists($filepath .'/'.$threedaysagofile)) {
+        var_dump($filepath .'/'.$threedaysagofile);
             //ファイルあり
             $contents = \File::get($filepath .'/'.$threedaysagofile);
-            //dd($contents);
             //データ抽出
             $startpos = 0;
             while(mb_strpos($contents, '\n', $startpos)){
@@ -100,7 +101,7 @@ class MakeFileKurosan01
                         $meigaras = Meigara::where('code', $code)->first();
                         $name = $meigaras->name;
                         //dd($Dailys);
-                        $fileOutputString = $code .'/'. $endValue[0] .'\n';
+                        $fileOutputString = $code .'/'. $dailysArray[1] .'\n';
                         //ファイル出力
                         $today = Carbon::now()->toDateString();
                         Storage::append(('kabus/signal/'. $today .'_kurosan01.txt'), $fileOutputString );
@@ -109,6 +110,7 @@ class MakeFileKurosan01
                 //var_dump($fileloop);
                 $startpos = $endpos+1;
             }
+        /*
         } else {
             //ファイルがない
             $fileOutputString = "---" .'/'. "---" .'\n';
@@ -116,6 +118,7 @@ class MakeFileKurosan01
             $today = Carbon::now()->toDateString();
             Storage::append(('kabus/signal/'. $today .'_kurosan01.txt'), $fileOutputString );
         }
+        */
         //dd($Dailys);
     }
 }
