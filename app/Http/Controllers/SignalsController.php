@@ -59,6 +59,56 @@ class SignalsController extends Controller
     return view('signals.index_kurosanpei', compact('Sanpeis', 'today'));
 	}
 
+  public function index_akasanpei()
+  {
+  	$dt = Carbon::now();
+    //基準日(当日)の算出
+    //時間チェック
+    if($dt->hour < 18) {    
+        //18時より前は当日分のファイルがないので前日を基準に設定する
+        $dt->subDay();
+    }
+    //週末チェック
+    if($dt->dayOfWeek == 6){    //土曜
+        $dt->subDay();
+    } elseif ($dt->dayOfWeek == 0) {    //日曜
+        $dt->subDay(2);
+    }
+
+    $targetfile = $dt->year.'-'.sprintf('%02d', $dt->month).'-'.sprintf('%02d', $dt->day)."_akasan.txt";
+    $filepath_signal = storage_path('app/kabus/signal');
+  	$Sanpeis = [];
+    if (\File::exists($filepath_signal .'/'. $targetfile)) {
+			$contents = \File::get($filepath_signal .'/'. $targetfile);
+      $startpos = 0;
+      while(mb_strpos($contents, '\n', $startpos)){
+        $endpos = mb_strpos($contents, '\n', $startpos);
+        $rowstring = mb_substr($contents, $startpos, $endpos - $startpos);
+        $dailysArray = mb_split('/', $rowstring);
+        $code = str_replace(array("\n", "n","C"), '', $dailysArray[0]);
+				$meigaras = Meigara::where('code', $code)->first();
+				$name = $meigaras->name;
+				$upvalue = intval($dailysArray[4]) - intval($dailysArray[1]);
+				$uprate = sprintf('%.2f', intval($upvalue) / intval($dailysArray[1]) *100);
+				$Sanpeis_temp = [
+	    		"code" => $code,
+	    		"name" => $name,
+	    		"endValue03" => $dailysArray[1],
+	    		"endValue02" => $dailysArray[2],	
+	    		"endValue01" => $dailysArray[3],	
+	    		"endValue" => $dailysArray[4],
+	    		"upvalue" => $upvalue,
+	    		"uprate" => $uprate,
+				];
+				array_push($Sanpeis, $Sanpeis_temp);
+	      $startpos = $endpos+1;
+	   }
+		}
+		//dd($Sanpeis);
+		$today = $dt->toDateString();
+    return view('signals.index_akasanpei', compact('Sanpeis', 'today'));
+	}
+
   public function show_sanpei()
   {
 		//$dt = Carbon::create(request()->year, request()->month, request()->day);

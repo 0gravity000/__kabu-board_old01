@@ -27,8 +27,8 @@
           <td>{{ array_get($Sanpeis[$i], 'endValue02') }}</td>
           <td>{{ array_get($Sanpeis[$i], 'endValue01') }}</td>
           <td>{{ array_get($Sanpeis[$i], 'endValue') }}</td>
-          <td>{{ array_get($Sanpeis[$i], 'downvalue') }}</td>
-          <td>{{ array_get($Sanpeis[$i], 'downrate') }}</td>
+          <td>{{ array_get($Sanpeis[$i], 'upvalue') }}</td>
+          <td>{{ array_get($Sanpeis[$i], 'uprate') }}</td>
         </tr>
       @endfor
     </tbody>
