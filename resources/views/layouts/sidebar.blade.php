@@ -61,7 +61,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/Signals/volume">
+                <a class="nav-link" href="/Signals/volumeup">
                   <span data-feather="file-text"></span>
                   出来高急増
                 </a>

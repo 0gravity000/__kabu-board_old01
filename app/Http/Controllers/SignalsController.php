@@ -109,7 +109,17 @@ class SignalsController extends Controller
     return view('signals.index_akasanpei', compact('Sanpeis', 'today'));
 	}
 
-  public function show_sanpei()
+  public function index_volumeup()
+  {
+	 	$dt = Carbon::now();
+	 	$nowYear = $dt->year;
+	 	$nowMonth = $dt->month;
+	 	$nowDay = $dt->day;
+	 	//dd($nowYear, $nowMonth, $nowDay);
+	   return view('signals.index_volumeup', compact('nowYear', 'nowMonth', 'nowDay'));
+	}
+
+  public function show_volumeup()
   {
 		//$dt = Carbon::create(request()->year, request()->month, request()->day);
   	$dt = Carbon::now();
@@ -137,72 +147,78 @@ class SignalsController extends Controller
   	}
 		$onedayagofile = $dt->year.'-'.sprintf('%02d', $dt->month).'-'.sprintf('%02d', $dt->day).".txt";
 
-  	//2日前を算出
-		$dt->subDay();
-  	//週末チェック
-  	if($dt->dayOfWeek == 6){	//土曜
-  		$dt->subDay();
-  	} elseif ($dt->dayOfWeek == 0) {	//日曜
-  		$dt->subDay(2);
-  	}
-		$twodaysagofile = $dt->year.'-'.sprintf('%02d', $dt->month).'-'.sprintf('%02d', $dt->day).".txt";
-
-  	//3日前を算出
-		$dt->subDay();
-  	//週末チェック
-  	if($dt->dayOfWeek == 6){	//土曜
-  		$dt->subDay();
-  	} elseif ($dt->dayOfWeek == 0) {	//日曜
-  		$dt->subDay(2);
-  	}
-		$threedaysagofile = $dt->year.'-'.sprintf('%02d', $dt->month).'-'.sprintf('%02d', $dt->day).".txt";
-
-		$filepath = '../storage/app/kabus/daily';
+    $filepath = storage_path('app/kabus/daily');
 
   	$contents = '';
-  	$Dailys = array(array(), array(), array(), array());
-  	$Files = [ $basedayfile, $onedayagofile, $twodaysagofile, $threedaysagofile ];
+  	$contents_pre = '';
+  	$Volums = [];
+  	//$Dailys = array(array(), array());
+  	//$Files = [ $basedayfile, $onedayagofile ];
 		//dd($Files);
-		for ($fileloop=0; $fileloop < 4; $fileloop++) {	 //4日分ループ //30秒の制約にひっかかる。
-			if (\File::exists($filepath .'/'.$Files[$fileloop])) {
-				//ファイルあり
-				$contents = \File::get($filepath .'/'.$Files[$fileloop]);
-				//dd($contents);
-				//データ抽出
-				$startpos = 0;
-				while(mb_strpos($contents, '\n', $startpos)){
-		      $endpos = mb_strpos($contents, '\n', $startpos);
-		      $rowstring = mb_substr($contents, $startpos, $endpos - $startpos);
-
-					$dailysArray = mb_split('/', $rowstring);
-					//dd($dailysArray);
-					//改行コードの調整
-					$code = str_replace(array("\n", "n"), '', $dailysArray[0]);
-					$meigaras = Meigara::where('code', $code)->first();
-					$name = $meigaras->name;
-					$Dailys_temp = [
-		    		"code" => $code,
-		    		"name" => $name,
-		    		"endValue" => $dailysArray[1],
-					];
-					//dd($Dailys);
-					array_push($Dailys[$fileloop], $Dailys_temp);
-					//var_dump($fileloop);
-					$startpos = $endpos+1;
-				}
-			} else {
-				//ファイルがない
-				$Dailys_temp = [
-	    		"code" => "",
-	    		"name" => "",
-	    		"endValue" => "",
-				];
-				array_push($Dailys[$fileloop], $Dailys_temp);
+		if (\File::exists($filepath .'/'.$basedayfile)) {
+			//ファイルあり
+			$contents = \File::get($filepath .'/'.$basedayfile);
+			$contents_pre = \File::get($filepath .'/'.$onedayagofile);
+			//dd($contents);
+			//データ抽出
+			$startpos = 0;
+			while(mb_strpos($contents, '\n', $startpos)){
+	      $endpos = mb_strpos($contents, '\n', $startpos);
+	      $rowstring = mb_substr($contents, $startpos, $endpos - $startpos);
+				$dailysArray = mb_split('/', $rowstring);
+				//dd($dailysArray);
+				//改行コードの調整
+				$code = str_replace(array("\n", "n"), '', $dailysArray[0]);
+        if ($dailysArray[6] != "---") { //終値が---でないもの
+            //前日ファイルの、該当コードを探す
+            $pre_startpos = mb_strpos($contents_pre, $code.'/');
+            if ($pre_startpos) {
+              //前日出来高を取得
+              $pre_endpos = mb_strpos($contents_pre, '\n', $pre_startpos);
+              $pre_rowstring = mb_substr($contents_pre, $pre_startpos, $pre_endpos - $pre_startpos);
+							$pre_dailysArray = mb_split('/', $pre_rowstring);
+							//当日出来高と前日出来高を比較
+							//当日出来高が10,000以上かつ5倍以上のものを抽出
+							$volume = str_replace(',', '', $dailysArray[6]);
+							$pre_volume = str_replace(',', '', $pre_dailysArray[6]);
+							if(intval($volume) > 10000){
+								if (intval($volume) > intval($pre_volume)*5) {
+									$meigaras = Meigara::where('code', $code)->first();
+									$name = $meigaras->name;
+									$volumerate = sprintf('%.2f', (intval($volume) / intval($pre_volume)));
+									$Volums_temp = [
+						    		"code" => $code,
+						    		"name" => $name,
+						    		"volume" => $dailysArray[6],
+						    		"pre_volume" => $pre_dailysArray[6],
+						    		"volumerate" => $volumerate,
+									];
+									array_push($Volums, $Volums_temp);
+								}
+							}
+            }
+        }
+				$startpos = $endpos+1;
 			}
-		}	//4日分ループend
-		dd($Dailys);
+		} else {
+			//ファイルがない
+			$Dailys_temp = [
+    		"code" => "",
+    		"name" => "",
+    		"volume" => "",
+    		"pre_volume" => "",
+    		"volumerate" => "",
+			];
+			array_push($Volums, $Volums_temp);
+		}
+		//dd($Volums);
 
-    return view('signals.show_sanpei');
+	 	$dt = Carbon::now();
+	 	$nowYear = $dt->year;
+	 	$nowMonth = $dt->month;
+	 	$nowDay = $dt->day;
+
+    return view('signals.show_volumeup', compact('Volums', 'nowYear', 'nowMonth', 'nowDay'));
 	}
 
 }

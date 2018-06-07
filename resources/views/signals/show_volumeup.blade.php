@@ -2,8 +2,9 @@
 
 @section('content')
 <h2>シグナル</h2>
-<h3>三兵</h3>
-<form method="POST" action="/Signals/show_sanpei">
+<h3>出来高急増</h3>
+<p>当日出来高が10,000以上かつ5倍以上のものを抽出</p>
+<form method="POST" action="/Signals/show_volumeup">
   {{ csrf_field()}}
   <div class="form-group">
     <label for="year">年</label>
@@ -26,27 +27,21 @@
       <tr>
         <th>コード</th>
         <th>銘柄名</th>
-        <th>終値</th>
-        <th>前日終値</th>
-        <th>始値</th>
-        <th>高値</th>
-        <th>安値</th>
         <th>出来高</th>
+        <th>前日出来高</th>
+        <th>増加率</th>
       </tr>
     </thead>
     <tbody>
-          @for($i = 0; $i < count($Dailys); $i++)
+      @for($i = 0; $i < count($Volums); $i++)
         <tr>
-            <td>{{ array_get($Dailys[$i], 'code') }}</td>
-            <td>{{ array_get($Dailys[$i], 'name') }}</td>
-            <td>{{ array_get($Dailys[$i], 'endValue') }}</td>
-            <td>{{ array_get($Dailys[$i], 'preEndvalue') }}</td>
-            <td>{{ array_get($Dailys[$i], 'startValue') }}</td>
-            <td>{{ array_get($Dailys[$i], 'highValue') }}</td>
-            <td>{{ array_get($Dailys[$i], 'lowValue') }}</td>
-            <td>{{ array_get($Dailys[$i], 'volume') }}</td>
+          <td>{{ array_get($Volums[$i], 'code') }}</td>
+          <td>{{ array_get($Volums[$i], 'name') }}</td>
+          <td>{{ array_get($Volums[$i], 'volume') }}</td>
+          <td>{{ array_get($Volums[$i], 'pre_volume') }}</td>
+          <td>{{ array_get($Volums[$i], 'volumerate') }}</td>
         </tr>
-          @endfor
+      @endfor
     </tbody>
   </table>
 </div>
