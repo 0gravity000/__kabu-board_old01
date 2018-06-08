@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 use App\Meigara;
+use Illuminate\Support\Facades\Log;
 
 class SignalsController extends Controller
 {
@@ -181,7 +182,9 @@ class SignalsController extends Controller
 							//当日出来高が10,000以上かつ5倍以上のものを抽出
 							$volume = str_replace(',', '', $dailysArray[6]);
 							$pre_volume = str_replace(',', '', $pre_dailysArray[6]);
-							if(intval($volume) > 10000){
+							//dd($code.':'.$pre_volume);
+			        //Log::debug($code.':'.$pre_volume);
+							if($pre_volume != "---" && (intval($volume) > 10000)){
 								if (intval($volume) > intval($pre_volume)*5) {
 									$meigaras = Meigara::where('code', $code)->first();
 									$name = $meigaras->name;
