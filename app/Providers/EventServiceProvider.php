@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CheckKabuValue' => [
             'App\Listeners\KabuValueNotification',
         ],
+        'App\Events\ResetChangeRateEvent' => [
+            'App\Listeners\ResetDBChangeRate',
+        ],
         'App\Events\CheckDailyValue01' => [
             'App\Listeners\DownloadDailyValue01',
         ],

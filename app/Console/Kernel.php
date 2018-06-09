@@ -25,7 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //リアルタイム株価チェック
-        $schedule->command('kabu:checkvalue')->weekdays()->everyMinute()->between('8:55', '15:30');
+        $schedule->command('kabu:checkvalue')->weekdays()->everyMinute()->between('8:58', '15:30');
+        //騰落率リセット
+        $schedule->command('kabu:resechangetrate')->weekdays()->dailyAt('8:57')->sendOutputTo(storage_path('logs/reset_output.txt'));
         //日足データチェック
         //タイムアウトにひっかかり全データを一度に取得できない
         //100ずつ38回に分けて取得する
