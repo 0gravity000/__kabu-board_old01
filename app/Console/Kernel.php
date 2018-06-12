@@ -69,20 +69,20 @@ class Kernel extends ConsoleKernel
         $schedule->command('kabu:dailydownload36')->dailyAt('17:10')->appendOutputTo(storage_path('logs/daily_output.txt'));
         $schedule->command('kabu:dailydownload37')->dailyAt('17:12')->appendOutputTo(storage_path('logs/daily_output.txt'));
         $schedule->command('kabu:dailydownload38')->dailyAt('17:14')->appendOutputTo(storage_path('logs/daily_output.txt'));
-        //黒三平チェック
+        //黒三平チェック 日足データの後に実行すること
         //30秒タイムアウトにひっかかり全データを一度に実行できない
         //4回に分けて実行する
-        $schedule->command('kabu:signalkurosan01')->dailyAt('17:30')->sendOutputTo(storage_path('logs/signal_output.txt'));
-        $schedule->command('kabu:signalkurosan02')->dailyAt('17:32')->appendOutputTo(storage_path('logs/signal_output.txt'));
-        $schedule->command('kabu:signalkurosan03')->dailyAt('17:34')->appendOutputTo(storage_path('logs/signal_output.txt'));
-        $schedule->command('kabu:signalkurosan04')->dailyAt('17:36')->appendOutputTo(storage_path('logs/signal_output.txt'));
-        //赤三平チェック
+        $schedule->command('kabu:signalkurosan01')->dailyAt('17:16')->sendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalkurosan02')->dailyAt('17:18')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalkurosan03')->dailyAt('17:20')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalkurosan04')->dailyAt('17:22')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        //赤三平チェック 日足データの後に実行すること
         //30秒タイムアウトにひっかかり全データを一度に実行できない
         //4回に分けて実行する
-        $schedule->command('kabu:signalakasan01')->dailyAt('17:38')->sendOutputTo(storage_path('logs/signal_output.txt'));
-        $schedule->command('kabu:signalakasan02')->dailyAt('17:40')->appendOutputTo(storage_path('logs/signal_output.txt'));
-        $schedule->command('kabu:signalakasan03')->dailyAt('17:42')->appendOutputTo(storage_path('logs/signal_output.txt'));
-        $schedule->command('kabu:signalakasan04')->dailyAt('17:44')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalakasan01')->dailyAt('17:24')->sendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalakasan02')->dailyAt('17:26')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalakasan03')->dailyAt('17:28')->appendOutputTo(storage_path('logs/signal_output.txt'));
+        $schedule->command('kabu:signalakasan04')->dailyAt('17:30')->appendOutputTo(storage_path('logs/signal_output.txt'));
 
         //$schedule->exec("touch foo.txt")->everyFiveMinutes();
         // $schedule->command('inspire')

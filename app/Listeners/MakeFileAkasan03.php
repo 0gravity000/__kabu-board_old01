@@ -31,12 +31,14 @@ class MakeFileAkasan03
     public function handle(CheckSignalAkasan03 $event)
     {
         $dt = Carbon::now();
+        /*
         //基準日(当日)の算出
         //時間チェック
         if($dt->hour < 18) {    
             //18時より前は当日分のファイルがないので前日を基準に設定する
             $dt->subDay();
         }
+        */
         //週末チェック
         if($dt->dayOfWeek == 6){    //土曜
             $dt->subDay();
